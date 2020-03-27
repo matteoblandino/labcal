@@ -1,0 +1,63 @@
+for j=1:4
+filename       = 'data/NACA 0012.dat';
+delimiterIn    = ' ';
+headerlinesIn  = 1;
+format long;
+
+airfoil_struct = importdata(filename,delimiterIn,headerlinesIn);
+
+fields = fieldnames(airfoil_struct);
+coord  = char(fields(1));
+
+airfoil_coord = airfoil_struct.(coord);
+
+
+X = airfoil_coord(:,1);
+Y = airfoil_coord(:,2);
+Xc = 0.25;
+Yc = 0;
+ang = (pi/180)*j;
+Xr =  (X-Xc)*cos(ang) + (Y-Yc)*sin(ang) + Xc;
+Yr = -(X-Xc)*sin(ang) + (Y-Yc)*cos(ang) + Yc;
+
+
+
+
+figure;
+plot(Xr(1:end),Yr(1:end),'.','MarkerSize',20);
+axis equal;
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+filename       = strcat('data/NACA_0012_',num2str(j),'.txt');
+delimiterIn    = ' ';
+headerlinesIn  = 6;
+format long;
+
+analysis_struct = importdata(filename,delimiterIn,headerlinesIn);
+
+fields = fieldnames(analysis_struct);
+analysis  = char(fields(1));
+
+airfoil_analysis = analysis_struct.(analysis);
+
+
+%calcolo cl
+for i=1:99      
+lunghezza(i) = sqrt((Xr(i+1)-Xr(i))^2 + (Yr(i+1)-Yr(i))^2);
+seno(i) = (Xr(i+1)-Xr(i))/lunghezza(i);
+coseno(i) = (Yr(i+1)-Yr(i))/lunghezza(i);
+cl_1(i) = lunghezza(i)*seno(i)*(airfoil_analysis(i,2))';
+cd_1(i) = lunghezza(i)*coseno(i)*(airfoil_analysis(i,2))';
+end
+cl(j)=sum(cl_1);
+cd(j)=sum(cd_1);
+end
+
+
+%%%plotto cl vs alpha
+figure
+plot(1:4,cl(1:4),'ko-')
