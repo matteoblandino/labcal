@@ -245,7 +245,7 @@
 !     calcolo dell'integrale
    
       B=(tauB - tauA)*1/(4.d0*pi)*log(hns)**2 +(hns/(pi*4.d0))*(int1b &
-      + int2b + int3b - int1a  + int2a - int3a)       
+      - int2b + int3b - int1a  + int2a - int3a)       
 !________________________________________________________________________
       return
       end
