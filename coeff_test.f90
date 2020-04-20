@@ -246,7 +246,7 @@
 
 !     calcolo dell'integrale
    
-      B = intC + (hns/4.d0*pi)*(intB - intA)    
+      B = intC + (hns/(4.d0*pi))*(intB - intA)    
 !________________________________________________________________________
       return
       end
