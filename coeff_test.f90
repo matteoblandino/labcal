@@ -85,6 +85,7 @@
 !       
          xa = xb
          ya = yb
+
       end do
 !
       cmn_string = ' sumA = '
@@ -207,7 +208,7 @@
       real(8) :: sn,cs,atg,atan_S
       real(8) :: dA,atanA
       real(8) :: dB,atanB
-      real(8) :: int1a,int1b,int2a,int2b,int3a,int3b
+      real(8) :: intA,intB,intC
 !______________________________________________________________________
       pi   = acos(-1.d0)
       xm   = (xa+xb)*0.5d0
@@ -221,31 +222,31 @@
       tauB  = hl*0.5d0 - taus
       diffA = (tauA - taus)/hns
       diffB = (tauB - taus)/hns
-      
-!     definisco arcotangenti
-      dA = sqrt(tauA**2 + hns**2)
-      sn = hns/dA
-      cs = tauA/dA
-      atanA = atan_S(sn,cs)
-     
+ 
+!     Limite di integrazione B
+
       dB = sqrt(tauB**2 + hns**2)
       sn = hns/dB
       cs = tauB/dB
       atanB = atan_S(sn,cs)
+      intB = diffB*log(1.d0 + diffB**2) - 2.d0*(diffB - atanB)
 
-!     calcolo parti dell'integrale
 
-      int1b = diffB*log(1 + diffB**2)
-      int1a = diffA*log(1 + diffA**2)
-      int2b = 2.d0*diffB
-      int2a = 2.d0*diffA
-      int3b = 2.d0*atanB
-      int3a = 2.d0*atanB
+
+!     Limite di integrazione A
+
+      dA = sqrt(tauA**2 + hns**2)
+      sn = hns/dA
+      cs = tauA/dA
+      atanA = atan_S(sn,cs)
+      intA = diffA*log(1.d0 + diffA**2) - 2.d0*(diffA - atanA)
+
+!     Termine iniziale integrale
+      intC = ((tauB - tauA)*log(hns**2))/(4.d0*pi)
 
 !     calcolo dell'integrale
    
-      B=(tauB - tauA)*1/(4.d0*pi)*log(hns)**2 +(hns/(pi*4.d0))*(int1b &
-      - int2b + int3b - int1a  + int2a - int3a)       
+      B = intC + (hns/4.d0*pi)*(intB - intA)    
 !________________________________________________________________________
       return
       end
