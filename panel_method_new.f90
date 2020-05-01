@@ -113,7 +113,7 @@
       atgB = atan_C(-hns,sn,cs)
 !
 !
-!!    write(*,*) '____________ CoeffA _________________'
+!!    write(*,*) '____________ CoeffB _________________'
 !!    write(*,1001) hns,taus
 !!    write(*,1000) cs,sn,atgB/pi*180.
 !
@@ -217,29 +217,9 @@
       Coe_a3 =  hns*atgA
 !!    Coe_a = Coe_a1+Coe_a2
       Coe_a = Coe_a1+Coe_a2+Coe_a3
-!
-!     write(*,*) 'coeffB: Coe_a = ',Coe_a
+
 !   
       A = (Coe_b-Coe_a)/(2.d0*pi)
-!
-!!    write(*,*) 'coeffB: B = ',B
-!
-!!    write(*,*) 'coeffB: Coe_b1 n = ',Coe_b1
-!!    write(*,*) 'coeffB: Coe_b1 a = ',1/(2.)*hl/2.*log(hl**2/2.)
-!!    write(*,*) 'coeffB: Coe_b2 n = ',Coe_b2
-!!    write(*,*) 'coeffB: Coe_b2 a = ',-hl/2.
-!!    write(*,*) 'coeffB: Coe_b3 n = ',Coe_b3
-!!    write(*,*) 'coeffB: Coe_b3 a = ',-hl/2.*3./4.*pi
-!!    write(*,*) 'coeffB: Coe_a1 n = ',Coe_a1
-!!    write(*,*) 'coeffB: Coe_a1 a = ',-1/(2.)*hl/2.*log(hl**2/2.)
-!!    write(*,*) 'coeffB: Coe_a2 n = ',Coe_a2
-!!    write(*,*) 'coeffB: Coe_a2 a = ',hl/2.
-!!    write(*,*) 'coeffB: Coe_a3 n = ',Coe_a3
-!!    write(*,*) 'coeffB: Coe_a3 a = ',-hl/2.*5./4.*pi
-!!    write(*,*) 'coeffB:'
-!!    write(*,*) 'Coeff:  Coe1     = ',Coe_b1-Coe_a1
-!!    write(*,*) 'Coeff:  Coe2     = ',Coe_b2-Coe_a2
-!!    write(*,*) 'Coeff:  Coe3     = ',Coe_b3-Coe_a3
 !______________________________________________________________________
       return
       end
@@ -416,7 +396,7 @@
       end
 !_____________________________________________________________________n
 !_____________________________________________________________________n
-      subroutine b_cond(n,Uinf,hnx,hny,bc)
+      subroutine b_cond(n,Uinf,ys,bc)
 !_____________________________________________________________________n
 !
 !     condizioni al contorno per panel_method
